@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <script src="http://d3js.org/d3.v3.js"></script>
+</head>
+<body>
+
+        <svg>
+                <ellipse cx="150" cy="50" rx="100" ry="50" fill="rgb(234,234,234)" stroke-width="1" stroke="rgb(0,0,0)"/>
+              </svg>
+
+<h3>D3.js</h3>
+
+<style>
+        .item{
+            margin-bottom: 7px;
+            font-size: 15px;
+            margin-right: 2px;
+            min-height: 25px;
+            min-width: 20px;
+        }
+        .data {
+            background-color: steelblue;
+            text-align: right;
+            color: #f0f8ff;
+            display:inline-block;
+        }
+        .name{
+            display:inline-block;
+            margin-left:5px;
+        }
+        </style>
+        <body>
+         
+        <div class="diagram"></div>
+         
+        <script type="text/javascript">
+        var phones = [ {name: 'iPhone 6', price: 64},
+        {name: 'Samsung Galaxy S5', price: 48},
+        {name: 'LG G4', price: 36},
+        {name : 'MiPad 5', price: 25}];
+         
+        // Enter
+        d3.select('div.diagram').selectAll('div').data(phones).enter().append('div').attr('class', 'item')
+        .append('div').attr('class', 'data').append('span');
+         
+        // Update
+        d3.select('div.diagram').selectAll('div.item').data(phones)
+        .select('div').style('width', function (d) { return (d.price * 3) + 'px';})
+        .select('span').text(function (d) { return d.price;});
+         
+        d3.select('div.diagram').selectAll('div.item').data(phones).append('div').attr('class', 'name')
+        .text(function (d) {return d.name;});
+         
+        // Exit
+        d3.select('div.diagram').selectAll('div.item').data(phones).exit().remove();
+        </script>
+
+        <script>
+        var width = 400,
+    height = 400;
+             
+var svg = d3.select("body").append("svg");
+ 
+svg.attr("height", height)
+    .attr("width", width);   
+// оригинальный круг    
+svg.append("circle")
+    .style("fill", "none")
+    .style("stroke", "steelblue")
+    .style("stroke-width", "2")
+    .attr("cx", 100)
+    .attr("cy", 100)
+    .attr("r", 50);
+// круг с перемещением
+svg.append("circle")
+    .style("fill", "none")
+    .style("stroke", "red")
+    .style("stroke-width", "2")
+    .attr("cx", 100)
+    .attr("cy", 100)
+    .attr("r", 50)
+    .transition()
+    .duration(5000)
+    .delay(200)
+    .attr("transform", "translate(50, 40)");
+        </script>
+
+<style>
+        .axis path, .axis line {
+            fill: none;
+            stroke: steelblue;
+        }
+         
+        .axis text {
+            font: 10px Verdana;
+        }
+        </style>
+         
+        <script type="text/javascript">
+        var height = 500; // длина оси Y
+        var width = 500; // длина оси X
+        var margin = 25; // отступ
+        var offset = 50; // смещение между значениями на осях
+        // добавляем к оси отступы слева и справа
+        var axisWidth = width - 2 * margin; 
+        var svg; //объект svg, который будет содержать визуализацию
+        createAxes();
+        function createAxes(){
+            // создаем объект svg
+            svg = d3.select("body").append("svg")
+                .attr("class", "axis")
+                .attr("width", width)
+                .attr("height", height);
+             
+            // функция интерполяции значений на оси
+            var scale = d3.scale.linear()
+                        .domain([0, 1000])
+                        .range([0, axisWidth]);
+            // создание осей
+            var axis = d3.svg.axis() 
+                    .scale(scale) // функция интерполяции
+                    .orient('bottom') // горизонтальная
+                    .ticks(5); // сколько делений на оси
+            // добавляем элемент с осями на страницу
+            svg.append("g")
+                .attr("transform", "translate("+margin+","+offset+")")
+                .call(axis);
+        }
+        </script>
+        <img src="Sphere_wireframe_15deg_4r.svg"  contextmenu="edit" draggable="true" >
+
+        <menu type="context" id="edit">
+                <li>Вырезать</li>
+                <li>Копировать</li>
+                <li>Вставить</li>
+                <li>Редактировать</li>
+                <li>Выравнивание</li>
+               </menu>
+</body>
+</html>
